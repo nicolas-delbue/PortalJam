@@ -108,7 +108,6 @@ public class AimShoot : MonoBehaviour
                 Vector2 barrelPos = new Vector2(barrelTransform.position.x, barrelTransform.position.y);
                 Vector2 direction = (hit.point - barrelPos).normalized;
                 Vector2 bounceDirection = Vector2.Reflect(direction, hit.normal);
-                Vector2 lasthitpoint = hit.point;
 
                 RaycastHit2D hitbounce = Physics2D.Raycast(hit.point, bounceDirection, float.MaxValue, Mask);
                 if (hitbounce)
@@ -116,12 +115,12 @@ public class AimShoot : MonoBehaviour
                     //line.positionCount += 1;
                     AddLine();
                     Debug.Log("Hit2");
-                    UnityEngine.Debug.DrawLine(lasthitpoint, hitbounce.point, Color.magenta, 10.0f);
+                    UnityEngine.Debug.DrawLine(hit.point, hitbounce.point, Color.magenta, 10.0f);
                     //line.SetPosition(2, hitbounce.point);
                     UpdateLine(hitbounce.point, 2);
 
-                    Vector2 barrelPos2 = new Vector2(barrelTransform.position.x, barrelTransform.position.y);
-                    Vector2 direction2 = (hitbounce.point - barrelPos2).normalized;
+                    //Vector2 barrelPos2 = new Vector2(barrelTransform.position.x, barrelTransform.position.y);
+                    Vector2 direction2 = (hitbounce.point - hit.point).normalized;
                     Vector2 bounceDirection2 = Vector2.Reflect(direction2, hitbounce.normal);
 
                     RaycastHit2D hitbounce2 = Physics2D.Raycast(hitbounce.point, bounceDirection2, float.MaxValue, Mask);
@@ -136,16 +135,16 @@ public class AimShoot : MonoBehaviour
                     else
                     {
                         Debug.Log("Miss");
-                        UnityEngine.Debug.DrawLine(hitbounce.point, bounceDirection * 100, Color.magenta, 10.0f);
+                        UnityEngine.Debug.DrawLine(hitbounce.point, bounceDirection2 * 100, Color.magenta, 10.0f);
                         AddLine();
-                        UpdateLine(bounceDirection * 100, 3);
+                        UpdateLine(bounceDirection2 * 100, 3);
                     }
 
                 }
                 else
                 {
                     Debug.Log("Miss");
-                    UnityEngine.Debug.DrawLine(lasthitpoint, bounceDirection * 100, Color.magenta, 10.0f);
+                    UnityEngine.Debug.DrawLine(hit.point, bounceDirection * 100, Color.magenta, 10.0f);
                     AddLine();
                     line.SetPosition(2, bounceDirection * 100);
                     UpdateLine(bounceDirection * 100, 2);
