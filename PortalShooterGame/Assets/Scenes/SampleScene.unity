@@ -1122,7 +1122,7 @@ MonoBehaviour:
   barrelTransform: {fileID: 1255529592}
   canFire: 1
   maxAmmo: 10
-  timeBetweenFiring: 1.2
+  timeBetweenFiring: 5
   bulletLine: {fileID: 7067151294195714334, guid: 5eb1fc3a585b2694cbd6870f4250ab1f, type: 3}
   bulletSpeed: 100
   Mask:
