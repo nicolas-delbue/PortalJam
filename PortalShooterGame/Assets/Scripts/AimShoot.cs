@@ -34,6 +34,8 @@ public class AimShoot : MonoBehaviour
     {
         m_Camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         currentAmmo = maxAmmo; //This needs to change so different levels are different max ammo
+        EventScript.current.UpdateMaxAmmo(maxAmmo);
+        EventScript.current.UpdateAmmo(currentAmmo);
         UnityEngine.Debug.Log(currentAmmo);
     }
     void Update()
@@ -63,7 +65,6 @@ public class AimShoot : MonoBehaviour
             canFire = false;
             //Let level manager know ammo ran out.
         }
-
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -172,6 +173,7 @@ public class AimShoot : MonoBehaviour
 
             canFire = false;
             currentAmmo--;
+            EventScript.current.UpdateAmmo(currentAmmo);
             Destroy(line, 5f);
             Destroy(lineObject, 5f);
         }
@@ -219,14 +221,16 @@ public class AimShoot : MonoBehaviour
             {
                 //Breakable Wall breaks
                 case "BreakableWall":
-                    //hit.collider.GetComponent<BreakableWall>().BreakWall();
+                    hit.collider.GetComponent<DestructableWalls>().HitDestructableWall();
+                    WallHit = true;
+                    break;
                 //All Walls bounce shots.
                 case "Bounce":
                     WallHit = true;
                     break;
                 //Target breaks but shot continues no matter what.
                 case "Target":
-                    //hit.collider.GetComponent<Target>().TargetBreak();
+                    hit.collider.GetComponent<Target>().TargetHit();
                     break;
                 //Shot goes through 
                 case "Portal":
